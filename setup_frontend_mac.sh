@@ -91,18 +91,86 @@ fi
 
 print_success "Cleanup completed"
 
-# Step 2: Install dependencies
+# Step 2: Install dependencies with fallback strategies
 print_status "Step 2/4: Installing frontend dependencies..."
 print_warning "This may take 1-3 minutes depending on your internet connection..."
 
-npm install
-if [ $? -ne 0 ]; then
-    print_error "Failed to install dependencies"
-    print_error "Check your internet connection and try again"
+# Function to try npm install with different strategies
+install_dependencies() {
+    local strategy=$1
+    local description=$2
+    
+    print_status "Trying: $description"
+    
+    case $strategy in
+        "normal")
+            npm install
+            ;;
+        "legacy-peer-deps")
+            npm install --legacy-peer-deps
+            ;;
+        "force")
+            npm install --force
+            ;;
+        "cache-clean")
+            print_warning "Cleaning npm cache..."
+            npm cache clean --force
+            npm install --legacy-peer-deps
+            ;;
+    esac
+    
+    return $?
+}
+
+# Try multiple installation strategies
+INSTALL_SUCCESS=false
+
+# Strategy 1: Normal install
+if install_dependencies "normal" "Standard npm install"; then
+    INSTALL_SUCCESS=true
+    print_success "Dependencies installed successfully (standard method)"
+else
+    print_warning "Standard install failed, trying fallback strategies..."
+    
+    # Strategy 2: Legacy peer deps
+    if install_dependencies "legacy-peer-deps" "npm install --legacy-peer-deps"; then
+        INSTALL_SUCCESS=true
+        print_success "Dependencies installed successfully (with legacy peer deps)"
+    else
+        print_warning "Legacy peer deps failed, trying force install..."
+        
+        # Strategy 3: Force install
+        if install_dependencies "force" "npm install --force"; then
+            INSTALL_SUCCESS=true
+            print_success "Dependencies installed successfully (with force)"
+        else
+            print_warning "Force install failed, trying cache clean..."
+            
+            # Strategy 4: Clean cache and retry
+            if install_dependencies "cache-clean" "Clean cache + legacy peer deps"; then
+                INSTALL_SUCCESS=true
+                print_success "Dependencies installed successfully (after cache clean)"
+            fi
+        fi
+    fi
+fi
+
+# Check if any strategy worked
+if [ "$INSTALL_SUCCESS" = false ]; then
+    print_error "❌ All installation strategies failed!"
+    echo ""
+    echo "🔧 MANUAL TROUBLESHOOTING:"
+    echo "=========================="
+    echo "1. Check your internet connection"
+    echo "2. Try: npm install --legacy-peer-deps"
+    echo "3. Try: npm install --force"
+    echo "4. Try: npm cache clean --force && npm install"
+    echo "5. Delete node_modules and package-lock.json, then retry"
+    echo ""
     exit 1
 fi
 
-print_success "All frontend dependencies installed"
+print_success "✅ All frontend dependencies installed successfully!"
 
 # Step 3: Verify installation
 print_status "Step 3/4: Verifying installation..."
@@ -174,7 +242,7 @@ echo ""
 echo "🧪 TEST THE COMPLETE SYSTEM:"
 echo "============================"
 echo "1. Open http://localhost:3000"
-echo "2. Login with test user: john_doe / password123"
+echo "2. Login with test user: sarah_chen / password123 (or other workshop accounts)"
 echo "3. Ask: 'What is my account balance?'"
 echo "4. Ask: 'Show me my recent transactions'"
 echo "5. Ask: 'What are international transfer fees?'"

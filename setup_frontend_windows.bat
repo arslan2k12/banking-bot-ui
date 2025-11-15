@@ -70,19 +70,69 @@ if exist "package-lock.json" (
 
 echo [SUCCESS] Cleanup completed
 
-REM Step 2: Install dependencies
+REM Step 2: Install dependencies with fallback strategies
 echo [INFO] Step 2/4: Installing frontend dependencies...
 echo [WARNING] This may take 1-3 minutes depending on your internet connection...
 
+set INSTALL_SUCCESS=false
+
+REM Strategy 1: Normal install
+echo [INFO] Trying: Standard npm install
 npm install
-if %errorlevel% neq 0 (
-    echo [ERROR] Failed to install dependencies
-    echo [ERROR] Check your internet connection and try again
+if %errorlevel% equ 0 (
+    set INSTALL_SUCCESS=true
+    echo [SUCCESS] Dependencies installed successfully ^(standard method^)
+) else (
+    echo [WARNING] Standard install failed, trying fallback strategies...
+    
+    REM Strategy 2: Legacy peer deps
+    echo [INFO] Trying: npm install --legacy-peer-deps
+    npm install --legacy-peer-deps
+    if !errorlevel! equ 0 (
+        set INSTALL_SUCCESS=true
+        echo [SUCCESS] Dependencies installed successfully ^(with legacy peer deps^)
+    ) else (
+        echo [WARNING] Legacy peer deps failed, trying force install...
+        
+        REM Strategy 3: Force install
+        echo [INFO] Trying: npm install --force
+        npm install --force
+        if !errorlevel! equ 0 (
+            set INSTALL_SUCCESS=true
+            echo [SUCCESS] Dependencies installed successfully ^(with force^)
+        ) else (
+            echo [WARNING] Force install failed, trying cache clean...
+            
+            REM Strategy 4: Clean cache and retry
+            echo [INFO] Trying: Clean cache + legacy peer deps
+            echo [WARNING] Cleaning npm cache...
+            npm cache clean --force
+            npm install --legacy-peer-deps
+            if !errorlevel! equ 0 (
+                set INSTALL_SUCCESS=true
+                echo [SUCCESS] Dependencies installed successfully ^(after cache clean^)
+            )
+        )
+    )
+)
+
+REM Check if any strategy worked
+if "%INSTALL_SUCCESS%"=="false" (
+    echo [ERROR] ❌ All installation strategies failed!
+    echo.
+    echo 🔧 MANUAL TROUBLESHOOTING:
+    echo ==========================
+    echo 1. Check your internet connection
+    echo 2. Try: npm install --legacy-peer-deps
+    echo 3. Try: npm install --force
+    echo 4. Try: npm cache clean --force ^&^& npm install
+    echo 5. Delete node_modules and package-lock.json, then retry
+    echo.
     pause
     exit /b 1
 )
 
-echo [SUCCESS] All frontend dependencies installed
+echo [SUCCESS] ✅ All frontend dependencies installed successfully!
 
 REM Step 3: Verify installation
 echo [INFO] Step 3/4: Verifying installation...
@@ -155,7 +205,7 @@ echo.
 echo 🧪 TEST THE COMPLETE SYSTEM:
 echo ============================
 echo 1. Open http://localhost:3000
-echo 2. Login with test user: john_doe / password123
+echo 2. Login with test user: sarah_chen / password123 ^(or other workshop accounts^)
 echo 3. Ask: 'What is my account balance?'
 echo 4. Ask: 'Show me my recent transactions'
 echo 5. Ask: 'What are international transfer fees?'

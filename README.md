@@ -31,9 +31,12 @@ That's it! 🎉
 
 ## 🧪 Testing the Chat
 
-1. **Log in** with test credentials:
-   - Username: `john_doe`
-   - Password: `password123`
+1. **Log in** with any workshop test account:
+   - `sarah_chen` / `password123` (Tech Professional)
+   - `david_martinez` / `password123` (Family Manager)  
+   - `emma_thompson` / `password123` (Retiree)
+   - `ryan_patel` / `password123` (Student)
+   - `lisa_wong` / `password123` (Business Owner)
 
 2. **Try these questions:**
    - "What's my account balance?"

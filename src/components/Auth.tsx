@@ -104,10 +104,13 @@ export const LoginForm: React.FC = () => {
 
           <div className="mt-6 text-center">
             <div className="text-sm text-gray-400">
-              <p className="mb-2">Demo Accounts:</p>
+              <p className="mb-2">Workshop Test Accounts:</p>
               <div className="space-y-1 text-xs">
-                <p><span className="font-mono bg-gray-800 px-2 py-1 rounded">john_doe</span> / <span className="font-mono bg-gray-800 px-2 py-1 rounded">password123</span></p>
-                <p><span className="font-mono bg-gray-800 px-2 py-1 rounded">jane_smith</span> / <span className="font-mono bg-gray-800 px-2 py-1 rounded">password123</span></p>
+                <p><span className="font-mono bg-gray-800 px-2 py-1 rounded">sarah_chen</span> / <span className="font-mono bg-gray-800 px-2 py-1 rounded">password123</span> <span className="text-gray-500">Tech Professional</span></p>
+                <p><span className="font-mono bg-gray-800 px-2 py-1 rounded">david_martinez</span> / <span className="font-mono bg-gray-800 px-2 py-1 rounded">password123</span> <span className="text-gray-500">Family Manager</span></p>
+                <p><span className="font-mono bg-gray-800 px-2 py-1 rounded">emma_thompson</span> / <span className="font-mono bg-gray-800 px-2 py-1 rounded">password123</span> <span className="text-gray-500">Retiree</span></p>
+                <p><span className="font-mono bg-gray-800 px-2 py-1 rounded">ryan_patel</span> / <span className="font-mono bg-gray-800 px-2 py-1 rounded">password123</span> <span className="text-gray-500">Student</span></p>
+                <p><span className="font-mono bg-gray-800 px-2 py-1 rounded">lisa_wong</span> / <span className="font-mono bg-gray-800 px-2 py-1 rounded">password123</span> <span className="text-gray-500">Business Owner</span></p>
               </div>
             </div>
           </div>
