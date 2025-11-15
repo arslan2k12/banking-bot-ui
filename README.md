@@ -1,46 +1,122 @@
-# Getting Started with Create React App
+# Banking Bot Chat UI
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A modern React frontend for the Banking Bot AI assistant. This interface provides a beautiful chat experience with real-time streaming responses, user authentication, and conversation history.
 
-## Available Scripts
+## 🚀 Quick Setup (for Workshop Attendees)
 
-In the project directory, you can run:
+If you're attending the workshop, follow these simple steps:
 
-### `npm start`
+### Prerequisites
+- **Node.js 18 or higher** installed (check with `node --version`)
+- **Banking Bot API running** on port 2024 (from the BankingBot folder)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### Installation & Start
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+1. **Open a new terminal/command prompt**
+2. **Navigate to this folder:**
+   ```bash
+   cd banking-bot-ui
+   ```
+3. **Install dependencies:**
+   ```bash
+   npm install
+   ```
+4. **Start the app:**
+   ```bash
+   npm run dev
+   ```
+5. **Open your browser** to `http://localhost:3000`
 
-### `npm test`
+That's it! 🎉
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## 🧪 Testing the Chat
+
+1. **Log in** with test credentials:
+   - Username: `john_doe`
+   - Password: `password123`
+
+2. **Try these questions:**
+   - "What's my account balance?"
+   - "Show me my recent transactions"
+   - "What are international transfer fees?"
+
+## 🛠️ Tech Stack
+
+- **React 18** with TypeScript
+- **Vite** for fast development
+- **Tailwind CSS** for styling
+- **Axios** for API calls
+- **Lucide React** for icons
+
+## 📁 Project Structure
+
+```
+banking-bot-ui/
+├── src/
+│   ├── components/     # React components
+│   │   ├── Auth.tsx           # Login/register forms
+│   │   ├── ChatWindow.tsx     # Main chat interface
+│   │   ├── MessageItem.tsx    # Individual messages
+│   │   └── EvaluationSection.tsx # AI evaluation display
+│   ├── contexts/       # React contexts
+│   │   └── AuthContext.tsx    # Authentication state
+│   ├── services/       # API services
+│   │   └── api.ts             # API client with streaming
+│   ├── types/          # TypeScript definitions
+│   │   └── index.ts           # Shared types
+│   └── App.tsx         # Main app component
+├── public/             # Static assets
+└── package.json        # Dependencies and scripts
+```
+
+## 🔧 Available Scripts
+
+### `npm run dev`
+Starts the development server at `http://localhost:3000`
 
 ### `npm run build`
+Builds the app for production to the `dist` folder
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### `npm run preview`
+Previews the production build locally
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## 🎨 Features
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- **Real-time Chat**: Streaming AI responses
+- **User Authentication**: Secure login/logout
+- **Conversation History**: Persistent chat threads
+- **AI Evaluation**: LLM-as-a-Judge scoring system
+- **Responsive Design**: Works on desktop and mobile
+- **Modern UI**: Clean, professional banking interface
 
-### `npm run eject`
+## 🔗 API Integration
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+The frontend connects to the Banking Bot API at `http://localhost:2024`. Make sure the backend is running before starting the frontend.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## 🐛 Troubleshooting
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+### "npm install" fails
+- Check your internet connection
+- Try `npm install --legacy-peer-deps`
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+### "npm run dev" fails
+- Make sure port 3000 is available
+- Try a different port: `npm run dev -- --port 3001`
 
-## Learn More
+### Can't connect to API
+- Verify Banking Bot API is running on port 2024
+- Check browser console for CORS errors
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## 🤝 Contributing
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+This is a workshop project! Feel free to:
+- Experiment with the UI components
+- Add new features
+- Customize the styling
+- Test different chat scenarios
+
+## 📚 Learn More
+
+- [React Documentation](https://reactjs.org/)
+- [Vite Guide](https://vitejs.dev/guide/)
+- [Tailwind CSS](https://tailwindcss.com/docs)
